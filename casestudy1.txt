@@ -1,0 +1,67 @@
+CREATE A KSDS MAIN FILE NAMED PET'S MASTER WITH PET-ID AS PRIMARY KEY AND PET-TYPE AS ALTERNATE KEY
+
+
+
+01 PET-LIST.
+   05 PET-ID             PIC X(3).
+   05 PET-TYPE           PIC X.
+      88 CAT                      VALUE 'C'.
+	  88 DOG                      VALUE 'D'.
+	  88 BIRD                     VALUE 'B'.
+	  88 FISH                     VALUE 'F'.
+   05 BREED              PIC X(10).
+   05 DOP                PIC X(6).
+   05 CP                 PIC S9(4)V9(2).
+   05 QTYAVL             PIC 99.
+
+******************************************************************************
+
+CREATE A PS FILE NAMED SALES TRANSACTION 
+
+
+01 PET-LIST.               
+   05 PET-ID              PIC X(3).
+   05 MRP                 PIC S9(4)V9(2).
+   05 QTYBRGT             PIC 99.
+   
+   
+******************************************************************************
+
+CREATE AN ESDS FILE NAMED PROCESSED SALES
+
+
+01 PET-LIST                 
+   05 PET-ID              PIC X(3).
+   05 DOP                 PIC X(6).
+   05 QTY                 PIC 99.
+   05 TP                  PIC S9(5)V9(2).
+   05 PL                  PIC S9(4)V9(2).
+
+
+*******************************************************************************
+
+CREATE A REPORT DISPLAYING PROFIT/LOSS WITH THE FOLLOWING FIELDS
+
+PET-TYPE
+PET-ID
+BREED
+DOP
+PRICE
+QTY
+PROFIT/LOSS
+DATE
+PG-NO
+
+
+********************************************************************************
+   
+ CREATE A PS FILE TO STORE THE UNPROCESSED RECORDS
+ 
+ PET-ID
+ MRP
+ QTYBRGT
+ 
+ 
+ *******************************************************************************
+
+ 

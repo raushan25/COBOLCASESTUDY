@@ -1,0 +1,154 @@
+      ******************** ANIMAL LOVER PARADISE************************00001005
+      * THIS CODE IS ABOUT MAINTAINING THE RETAIL CHAIN OF A PET SHOP  *00002005
+      * AND CAPTURE THE PET SALE TRANSCTION DATA AND UNPROCESS DATA IF *00003005
+      * ON DAILY BASIS.                                                *00004005
+      *******************----- FILES -----***************************** 00004105
+      * PET-MASTER :- IT CONSIST OF AVAILABLE PETS IN SHOP AND ITS     *00005005
+      *               DATA LIKE QUANTITY AND COST PRIZE.               *00006007
+      * SALE-TRANS : -OREDER GIVEN TO DAILY BASIS.                     *00007007
+      * PROCESS-FIL:- WHAT EVER THE ORDER IS BEING SUCCESSFUL.         *00008007
+      * UNPROCES   :- THE UNPROCESS ORDER                              *00009005
+      ******************************************************************00009105
+       IDENTIFICATION DIVISION.                                         00010000
+       PROGRAM-ID. TESTPR3.                                             00020004
+       ENVIRONMENT DIVISION.                                            00030000
+       INPUT-OUTPUT SECTION.                                            00040000
+       FILE-CONTROL.                                                    00050000
+      **************** MASTER FILE **************************           00051000
+             SELECT PET-MASTER ASSIGN TO KSDS1                          00052002
+             RECORD KEY   IS PET-ID OF FS-MAIN                          00053000
+             ORGANIZATION IS INDEXED                                    00054000
+             ACCESS IS DYNAMIC                                          00055000
+             FILE STATUS  IS WS-FS1.                                    00056000
+      **************** SALE TRANSCTION FILE ********************        00057000
+             SELECT SALE-TRANS ASSIGN TO DD1                            00058002
+             ORGANIZATION IS SEQUENTIAL                                 00059000
+             FILE STATUS  IS WS-FS2.                                    00060000
+      **********************************************************        00061000
+             SELECT PROCESS-FIL ASSIGN TO AS-DD2                        00062002
+             ORGANIZATION IS SEQUENTIAL                                 00063000
+             FILE STATUS  IS WS-FS3.                                    00064000
+      **********************************************************        00065000
+             SELECT UNPROCESS-FIL ASSIGN TO DD3                         00065102
+             ORGANIZATION IS SEQUENTIAL                                 00065200
+             FILE STATUS  IS WS-FS4.                                    00065300
+      **********************************************************        00065400
+             SELECT REPORTBASE  ASSIGN TO DD4                           00065507
+             ORGANIZATION IS SEQUENTIAL                                 00065607
+             FILE STATUS  IS WS-FS5.                                    00065707
+      **************FOR SORTING SALE TRANS*********                     00065800
+             SELECT SORT-FILE ASSIGN TO SOTWK1.                         00065900
+      *********************************************                     00066000
+       DATA DIVISION.                                                   00066100
+       FILE SECTION.                                                    00066200
+       SD SORT-FILE.                                                    00066300
+       01 SORT-REC.                                                     00066400
+          05 SORT-FLD    PIC X(3).                                      00066500
+          05 FILLER      PIC X(77).                                     00066600
+       COPY COPYPROJ.                                                   00066703
+      *********************************************************         00212003
+       PROCEDURE DIVISION.                                              00213000
+       A100-MAIN.                                                       00214000
+      ***************SORT THE SALE-TRANSCTION FILE**************        00215000
+             DISPLAY " FIRST SORT THE SELL TRS FILE"                    00216000
+             SORT SORT-FILE                                             00217000
+             ASCENDING KEY SORT-FLD                                     00218000
+             USING SALE-TRANS GIVING SALE-TRANS                         00219004
+      ****************OPEN ALL FILES****************************        00220000
+             OPEN INPUT  SALE-TRANS                                     00230004
+             OPEN I-O    PET-MASTER                                     00240004
+             OPEN OUTPUT PROCESS-FIL                                    00250004
+             OPEN OUTPUT UNPROCESS-FIL                                  00290004
+             OPEN OUTPUT REPORTBASE                                     00300000
+             DISPLAY "OPEN FILE1 STATUS IS" WS-FS1                      00310000
+             DISPLAY "OPEN FILE2 STATUS "  WS-FS2                       00320000
+             PERFORM READ-PARA UNTIL WS-FS2 NOT = 0.                    00330000
+             DISPLAY 'PET-MASTER :' FS-MAIN                             00340004
+             CLOSE SALE-TRANS                                           00350004
+             CLOSE PET-MASTER                                           00360004
+             CLOSE PROCESS-FIL                                          00370004
+             CLOSE UNPROCESS-FIL REPORTBASE                             00380004
+             CALL 'REPCSE'                                              00390000
+             STOP RUN.                                                  00400000
+       READ-PARA.                                                       00401000
+             READ SALE-TRANS INTO     WS-SELLS                          00402006
+                  AT END DISPLAY " NO MORE ORDER"                       00403000
+                  NOT AT END PERFORM  READ-MAIN-PARA                    00404006
+                  DISPLAY " WS-FS2:"  WS-FS2                            00404106
+             END-READ.                                                  00404200
+       READ-MAIN-PARA.                                                  00404300
+             MOVE SPET-ID    TO PET-ID                                  00404406
+             READ PET-MASTER INTO WS-MAIN                               00404504
+             KEY IS PET-ID                                              00404600
+             INVALID KEY PERFORM UNPROCESS-PARA                         00404700
+             NOT INVALID KEY PERFORM CALCU-PARA                         00404800
+             END-READ.                                                  00404900
+       CALCU-PARA.                                                      00405000
+             IF (SPET-QUANT IS NOT NUMERIC) OR                          00406000
+              (SPET-COST2 IS NOT NUMERIC) OR (SPET-ID NOT = WPET-ID) OR 00407000
+                 (WPET-QUANT < SPET-QUANT)                              00408000
+                 PERFORM UNPROCESS-PARA                                 00409000
+             ELSE                                                       00410000
+                 PERFORM PROCESS-PARA                                   00420000
+             END-IF.                                                    00430000
+      *************************************************************     00440000
+       PROCESS-PARA.                                                    00441000
+                 MOVE    WPET-ID TO PPET-ID                             00443000
+                 ACCEPT  PPET-DATE FROM DATE                            00444000
+                 MOVE    SPET-QUANT TO PPET-QUANT                       00445000
+                 COMPUTE PTOTAL-P = SPET-COST2 * PPET-QUANT             00446000
+                      DISPLAY PTOTAL-P                                  00447000
+                 IF (SPET-COST2 < WPET-COST1)                           00448000
+                    DISPLAY " LOSS"                                     00449000
+                    COMPUTE P-L = (SPET-COST2 - WPET-COST1) * PPET-QUANT00450000
+                    DISPLAY P-L                                         00460000
+                 ELSE                                                   00470000
+                    DISPLAY " PROFIT"                                   00480000
+                    COMPUTE P-L = (SPET-COST2 - WPET-COST1) * PPET-QUANT00490000
+                    DISPLAY P-L                                         00490100
+                 END-IF                                                 00490200
+      ********************WRITE PROCESS FILE*************************   00490300
+                 WRITE FS-PROC FROM WS-PROC                             00490400
+                 IF WS-FS3 = 0                                          00490500
+                    DISPLAY " WRITE SUCCESS"                            00490600
+                 ELSE                                                   00490700
+                    DISPLAY "WRITR FILE3 FAIL"                          00490800
+                 END-IF                                                 00490900
+      *******************WRITE REPORT FILEBASE FILE*************        00491000
+                  MOVE  PPET-ID    TO RPET-ID                           00492007
+                  MOVE  PET-NAME   TO RBREED                            00493007
+                  MOVE  P-L        TO RP-L                              00494007
+                  MOVE  PPET-DATE  TO RPET-DATE                         00495007
+                  MOVE  PTOTAL-P   TO RTOATAL-P                         00496007
+                  MOVE  PPET-QUANT TO RPET-QUANT                        00497007
+                  WRITE FS-RBASE                                        00498007
+                  IF WS-FS5 = 0                                         00499007
+                     DISPLAY " RBASE READY"                             00500007
+                  ELSE                                                  00510007
+                     DISPLAY " ERROR"                                   00510107
+                  END-IF                                                00510207
+      **********************UPDATE IN MAINFILE************************  00510300
+                 COMPUTE WPET-QUANT = WPET-QUANT - SPET-QUANT           00510400
+                 MOVE WPET-QUANT TO PET-QUANT                           00510500
+                 REWRITE FS-MAIN                                        00510600
+                    IF WS-FS1 = 0                                       00510700
+                       DISPLAY "REWRITE SUCCESSFUL"                     00510800
+                    ELSE                                                00510900
+                       DISPLAY " REWRITE FAIL"                          00511000
+                    END-IF.                                             00512000
+        UNPROCESS-PARA.                                                 00513000
+                 DISPLAY " U ARE IN UNPROCESS"                          00514000
+             IF (SPET-COST2 IS NOT NUMERIC)                             00515000
+                 MOVE ' INVALID COST' TO ERROR-COND                     00516000
+             END-IF                                                     00517000
+             IF (SPET-QUANT IS NOT NUMERIC)                             00518000
+                 MOVE ' INVALID QUANT' TO ERROR-COND                    00519000
+             END-IF                                                     00520000
+             IF (WPET-QUANT < SPET-QUANT)                               00530000
+                 MOVE ' QUANTITY UNAVAL' TO ERROR-COND                  00540000
+             END-IF                                                     00550000
+             IF (SPET-ID IS NOT = WPET-ID)                              00560000
+                 MOVE ' INVALID PET-ID' TO ERROR-COND                   00570000
+             END-IF                                                     00580000
+                 WRITE FS-UNSEL FROM WS-SELLS                           00590000
+                 END-WRITE.                                             00600000

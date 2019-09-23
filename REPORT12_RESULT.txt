@@ -1,0 +1,29 @@
+***************************** Top of Data ******************************
+                                                            PAGE NO:  01
+                                                            23/09/19    
+ PET TYPE:-    CAT                                                      
+ PETID   BREED        DATEPUR       PRICE     QUANTITY    PROFIT        
+  130    SIAMESE       190923      0000000      01        200099        
+------------------------------------------------------------------------
+TOTAL QTY 01                                                            
+TOTAL P/L :-   -2000.99                                                 
+                                                                        
+                                                            PAGE NO:  02
+                                                            23/09/19    
+ PET TYPE:-    DOG                                                      
+ PETID   BREED        DATEPUR       PRICE     QUANTITY    PROFIT        
+  210    PUG           190923      0400000      01        199901        
+------------------------------------------------------------------------
+TOTAL QTY 01                                                            
+TOTAL P/L :-    1999.01                                                 
+                                                                        
+                                                            PAGE NO:  03
+                                                            23/09/19    
+ PET TYPE:-    FISH                                                     
+ PETID   BREED        DATEPUR       PRICE     QUANTITY    PROFIT        
+  410    GOLD          190923      1800297      03        200000 
+  430    GLOWLIGHT     190923      0100099      01        100000        
+ 000025 ------------------------------------------------------------------------
+ 000026 TOTAL QTY 04                                                            
+ 000027 TOTAL P/L :-    1000.00                                                 
+ 000028                                                                                

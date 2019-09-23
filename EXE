@@ -1,0 +1,13 @@
+//OZA080X JOB ,,NOTIFY=&SYSUID                                          00010000
+//JOBLIB DD DSN=OZA080.COBOL.LOADLIB,DISP=OLD                           00020000
+//       DD DSN=OZA063.COBOL.LOAD,DISP=OLD                              00021013
+//STEP1 EXEC PGM=TESTPR3                                                00030014
+//KSDS1 DD DSN=OZA080.VSAM.KSDS22,DISP=SHR                              00030100
+//DD1 DD DSN=OZA080.SALETRAN.PS,DISP=SHR                                00031017
+//DD2 DD DSN=OZA080.VSAM.ESDS11,DISP=SHR                                00032008
+//DD3 DD DSN=OZA080.UNPROCES.PS,DISP=SHR                                00032116
+//DD4 DD DSN=OZA080.STRI.PS1,DISP=SHR                                   00032204
+//DD5  DD DSN=OZA080.REPORT12.PS,DISP=OLD                               00032316
+//*SORTWK01 DD DSN=&TEMP                                                00033000
+//SYSIN DD DATA                                                         00034000
+/*                                                                      00035000

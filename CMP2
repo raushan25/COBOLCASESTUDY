@@ -1,0 +1,8 @@
+//OZA080C JOB OZA,OZA,MSGLEVEL=(1,1),TIME=1,                            00010000
+//             CLASS=1,MSGCLASS=X,NOTIFY=&SYSUID,REGION=80M             00020000
+// SET A=TESTPR3                                                        00030012
+//STEP2 EXEC IGYWCL,PARM.COBOL='LIB,OBJECT,APOST,DYNAM'                 00040000
+//COBOL.SYSIN  DD  DSN=OZA080.PROJECT.PGMS(&A),DISP=SHR                 00050001
+//COBOL.SYSLIB DD  DSN=OZA080.COBOL.COPYLIB,DISP=OLD                    00060000
+//LKED.SYSLMOD DD  DSN=OZA080.COBOL.LOADLIB(&A),DISP=SHR                00070006
+//*                                                                     00080000

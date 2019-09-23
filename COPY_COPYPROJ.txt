@@ -1,0 +1,69 @@
+  FD PET-MASTER.                      
+  01 FS-MAIN.                         
+     05 PET-ID      PIC 999.          
+     05 PET-TYP     PIC 9.            
+     05 PET-NAME    PIC X(10).        
+     05 PET-DATE    PIC 9(6).         
+     05 PET-COST1   PIC 9(4)V9(2).    
+     05 PET-QUANT   PIC 99.           
+     05 FILLER      PIC X(52).        
+  FD SALE-TRANS.                      
+  01 FS-SELLS.                        
+     05 PET-ID2     PIC 999.          
+     05 PET-COST2   PIC 9(4)V9(2).    
+     05 PET-QUANT2  PIC 99.           
+     05 FILLER      PIC X(69).        
+  FD PROCESS-FIL.                     
+  01 FS-PROC.                         
+     05 FPET-ID     PIC 999.          
+     05 FPET-DATE   PIC 9(6).         
+     05 FPET-QUANT  PIC 9(2).         
+     05 FTOATAL-P   PIC 9(5)V9(2).    
+     05 FP-L        PIC S9999V99.     
+     05 FILLER      PIC X(56).        
+  FD UNPROCESS-FIL.  
+ 01 FS-UNSEL.                       
+    05 UPET-ID     PIC 999.         
+    05 UPET-COST2  PIC 9(4)V9(2).   
+    05 UPET-QUANT  PIC 99.          
+    05 UERROR-COND PIC X(20).       
+    05 FILLER      PIC X(49).       
+ FD REPORTBASE.                     
+ 01 FS-RBASE.                       
+    05 RPET-ID     PIC 999.         
+    05 RBREED      PIC X(10).       
+    05 RPET-DATE   PIC 9(6).        
+    05 RTOATAL-P   PIC 9(5)V9(2).   
+    05 RPET-QUANT  PIC 9(2).        
+    05 RP-L        PIC 9999V99.     
+    05 FILLER      PIC X(46).       
+************************************
+ WORKING-STORAGE SECTION.           
+ 01 WS-MAIN.                        
+    05 WPET-ID     PIC 999.         
+    05 WPET-TYP    PIC 9.           
+    05 WPET-NAME   PIC X(10).       
+    05 WPET-DATE   PIC 9(6).        
+    05 WPET-COST1  PIC 9(4)V9(2).   
+    05 WPET-QUANT  PIC 99. 
+   05 FILLER      PIC X(52).                                     
+01 WS-SELLS.                                                     
+   05 SPET-ID      PIC 999.                                      
+   05 SPET-COST2   PIC 9(4)V9(2).                                
+   05 SPET-QUANT   PIC 99.                                       
+   05 ERROR-COND   PIC X(20).                                    
+   05 FILLER       PIC X(49).                                    
+01 WS-PROC.                                                      
+   05 PPET-ID      PIC 999.                                      
+   05 PPET-DATE    PIC 9(6).                                     
+   05 PPET-QUANT   PIC 9(2).                                     
+   05 PTOTAL-P     PIC 9(5)V9(2).                                
+   05 P-L          PIC S9999V99.                                 
+   05 FILLER       PIC X(56).                                    
+77 WS-FS1          PIC 99.                                       
+77 WS-FS2          PIC 99.                                       
+77 WS-FS3          PIC 99.                                       
+77 WS-FS4          PIC 99.                                       
+77 WS-FS5          PIC 99.                                       
+*********************************************************        
+********************* Bottom of Data ****************************                          
